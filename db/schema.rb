@@ -20,7 +20,7 @@ ActiveRecord::Schema.define(:version => 20101027155920) do
     t.integer "frequency"
   end
 
-  add_index "histograms", ["track_id", "level", "chromosome"], :name => "index_histograms_on_track_id_and_level_and_chromosome"
+  add_index "histograms", ["track_id", "level", "chromosome", "bin"], :name => "index_histograms_on_track_id_and_level_and_chromosome_and_bin"
 
   create_table "tracks", :force => true do |t|
     t.string   "name"
