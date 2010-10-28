@@ -33,9 +33,9 @@ module ApplicationHelper
   end
 
   def zoom_control(level, chromosome)
-    text = "<span>Zoom out</span>"
+    text = "<span>Zoom out (#{level})</span>"
     if level != 6
-      text = link_to("Zoom out", graph_path(:level => level + 1, :chromosome => chromosome.gsub(/^chr/, ""), :center => (level == 5 ? nil : @center)))
+      text = link_to("Zoom out (#{level})", graph_path(:level => level + 1, :chromosome => chromosome.gsub(/^chr/, ""), :center => (level == 5 ? nil : @center)))
     end
     content_tag(:div, text.html_safe, :id => "zoom_control").html_safe
   end
