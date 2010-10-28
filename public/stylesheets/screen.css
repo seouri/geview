@@ -1,8 +1,16 @@
 body {
   width: 940px;
-  margin: 20px auto;
+  margin: 1em auto;
 }
-
+#header {
+  margin-bottom: 0.25em;
+  font-size: 270%;
+  font-weight: bold;
+  color: #f03;
+}
+#header img {
+  margin-right: 0.25em;
+}
 #chromosome_nav ul {
   margin: 0;
   padding: 0;
