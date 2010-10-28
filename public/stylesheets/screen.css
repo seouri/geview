@@ -6,7 +6,7 @@ body {
   margin-bottom: 0.25em;
   font-size: 270%;
   font-weight: bold;
-  color: #f03;
+  color: #c03;
 }
 #header img {
   margin-right: 0.25em;
@@ -21,13 +21,13 @@ body {
   padding: 0;
   display: inline-block;
   background-color: #ccc;
-  color: #f03;
+  color: #c03;
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
   border-radius: 4px;
 }
 #chromosome_nav a, #chromosome_nav a:visited {
-  color: #f03;
+  color: #c03;
   text-decoration: none;
   display: block;
   margin: 0;
@@ -43,20 +43,20 @@ body {
 }
 #chromosome_nav span.current {
   color: #fff;
-  background-color: #f03;
+  background-color: #c03;
   margin: 0;
   padding: 0.25em 0.95em;
   display: block;
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
   border-radius: 4px;
-  border: 0px solid #f03;
+  border: 0px solid #c03;
 }
 #zoom_control {
   display: inline-block;
   margin: 1em 0;
   background-color: #ccc;
-  color: #f03;
+  color: #c03;
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
   border-radius: 4px;
@@ -67,7 +67,7 @@ body {
   color: #999;
 }
 #zoom_control a, #zoom_control a:visited {
-  color: #f03;
+  color: #c03;
   text-decoration: none;
   display: block;
   padding: 0.25em 0.95em;
