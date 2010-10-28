@@ -1,6 +1,6 @@
 class Histogram < ActiveRecord::Base
   def self.data(track, level, chromosome, center = nil)
-    bin_size = 10 ** level
+    bin_size = 10 ** level.to_i
     bin_start = center.blank? ? nil : center.to_i - bin_size * 100
     bin_end = center.blank? ? nil : center.to_i + bin_size * 100
     hist = center.blank? ? Histogram.where(:track_id => track).where(:level => level).where(:chromosome => chromosome) : Histogram.where(:track_id => track).where(:level => level).where(:chromosome => chromosome).where(["bin >= ?", bin_start]).where(["bin <= ?", bin_end])
@@ -9,6 +9,9 @@ class Histogram < ActiveRecord::Base
       freq[h.bin] = h.frequency
     end
     bin_min = bin_start || hist.map(&:bin).min
+    if bin_min < 0
+      bin_min = 0
+    end
     bin_max = bin_end || hist.map(&:bin).max
     data = []
     bin_min.step(bin_max, bin_size) do |bin|
@@ -19,7 +22,7 @@ class Histogram < ActiveRecord::Base
   end
 
   def self.data_overlap(level, chromosome, center = nil)
-    bin_size = 10 ** level
+    bin_size = 10 ** level.to_i
     bin_start = center.blank? ? nil : center.to_i - bin_size * 100
     bin_end = center.blank? ? nil : center.to_i + bin_size * 100
     hist = center.blank? ? Histogram.where(:level => level).where(:chromosome => chromosome) : Histogram.where(:level => level).where(:chromosome => chromosome).where(["bin >= ?", bin_start]).where(["bin <= ?", bin_end])
@@ -31,6 +34,9 @@ class Histogram < ActiveRecord::Base
       freq[h.bin] += h.frequency
     end
     bin_min = bin_start || hist.map(&:bin).min
+    if bin_min < 0
+      bin_min = 0
+    end
     bin_max = bin_end || hist.map(&:bin).max
     data = []
     bin_min.step(bin_max, bin_size) do |bin|
