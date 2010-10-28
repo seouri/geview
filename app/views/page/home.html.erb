@@ -62,7 +62,7 @@ vis.render();
 </script>
 <% end %>
 
-<h2>Overlap</h2>
+<h2>Overlap ((P1 or P2 or P3) and (Pinto et al. or Marshall et al.))</h2>
 <script type="text/javascript+protovis">
 var data0 = <%= Histogram.data_overlap(@level, @chromosome, @center).html_safe %>;
 var chromosome = "<%= @chromosome.gsub(/^chr/, "") %>";

@@ -17,6 +17,11 @@ a:hover {
 #header img {
   margin-right: 0.25em;
 }
+#header h2 {
+  color: #666;
+  font-size: 45%;
+  margin: 0 0 1em 0;
+}
 #chromosome_nav ul {
   margin: 0;
   padding: 0;

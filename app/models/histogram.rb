@@ -26,17 +26,15 @@ class Histogram < ActiveRecord::Base
     tracks = {}
     freq = {}
     hist.each do |h|
-      tracks[h.bin] ||= 0
-      tracks[h.bin] += 1
+      tracks[h.bin.to_s + ":" + h.track_id.to_s] = true
       freq[h.bin] ||= 0
       freq[h.bin] += h.frequency
     end
     bin_min = bin_start || hist.map(&:bin).min
     bin_max = bin_end || hist.map(&:bin).max
-    tracks_count = hist.map(&:track_id).uniq.size
     data = []
     bin_min.step(bin_max, bin_size) do |bin|
-      value = freq[bin].nil? || tracks[bin].nil? || tracks[bin] != tracks_count ? 0 : freq[bin] / freq.values.max.to_f * 100
+      value = ((tracks[bin.to_s + ":1"] or tracks[bin.to_s + ":2"] or tracks[bin.to_s + ":3"]) and (tracks[bin.to_s + ":4"] or tracks[bin.to_s + ":5"])) ? freq[bin] / freq.values.max.to_f * 100 : 0
       data.push({:x => bin, :y => value})
     end
     data.to_json
