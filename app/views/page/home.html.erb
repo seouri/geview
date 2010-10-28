@@ -2,7 +2,7 @@
 <%= zoom_control(@level, @chromosome)%>
 
 <% Track.all.each do |track| %>
-<h2><%= track.name %></h2>
+<h2><%= track.name.html_safe %></h2>
 <script type="text/javascript+protovis">
 var data<%= track.id %> = <%= Histogram.data(track.id, @level, @chromosome, @center).html_safe %>;
 var chromosome = "<%= @chromosome.gsub(/^chr/, "") %>";
