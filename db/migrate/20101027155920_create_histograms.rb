@@ -8,6 +8,7 @@ class CreateHistograms < ActiveRecord::Migration
       t.integer :frequency
     end
     add_index :histograms, [:track_id, :level, :chromosome, :bin]
+    add_index :histograms, [:level, :chromosome, :bin]
   end
 
   def self.down
