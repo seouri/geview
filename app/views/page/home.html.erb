@@ -1,3 +1,61 @@
-<% for chr in ["chr1", "chr2", "chr3", "chr4", "chr5", "chr6", "chr7", "chr8", "chr9", "chr10", "chr11", "chr12", "chr13", "chr14", "chr15", "chr16", "chr17", "chr18", "chr19", "chr20", "chr21", "chr22", "chrX", "chrY"] %>
-<%= histogram(1, 6, chr) %><br>
-<% end %>
+<%= chromosome_nav(@chromosome)%>
+<%= zoom_control(@level, @chromosome)%>
+
+<script type="text/javascript+protovis">
+var data = <%= Histogram.data(1, @level, @chromosome, @center).html_safe %>;
+var track = "<%= @track %>";
+var chromosome = "<%= @chromosome.gsub(/^chr/, "") %>";
+var zoom_in_level = "<%= @level.to_i - 1 %>";
+
+/* Sizing and scales. */
+var w = 900, /*data.length * 4,*/
+    h = 80,
+    x = pv.Scale.linear(data, function(d) d.x).range(0, w),
+    y = pv.Scale.linear(0, 100).range(0, h);
+ 
+/* The root panel. */
+var vis = new pv.Panel()
+    .width(w)
+    .height(h)
+    .bottom(20)
+    .left(30)
+    .right(30)
+    .top(5);
+
+/* bar graph */
+vis.add(pv.Panel)
+  .data(data)
+  .left(function(d) x(d.x))
+.add(pv.Bar)
+  .bottom(0)
+  .width(4)
+  .height(function(d) y(d.y))
+  .def("fillStyle", "#999")
+  .event("mouseover", function() this.fillStyle("#f03")) // override
+  .event("mouseout", function() this.fillStyle(undefined)) // restore
+  .event("click", function(d) self.location = "/graph/" + track + "/" + chromosome + "/" + zoom_in_level + "/" + d.x.toString())
+  .title(function(d) d.x);
+
+/* X-axis ticks. */
+vis.add(pv.Rule)
+    .data(x.ticks(4))
+    .visible(function(d) d > 0)
+    .left(x)
+    .strokeStyle("#eee")
+  .add(pv.Rule)
+    .bottom(-5)
+    .height(5)
+    .strokeStyle("#000")
+  .anchor("bottom").add(pv.Label)
+    .text(x.tickFormat);
+ 
+/* Y-axis ticks. */
+vis.add(pv.Rule)
+    .data(y.ticks(5))
+    .bottom(y)
+    .strokeStyle(function(d) d ? "#eee" : "#000")
+  .anchor("left").add(pv.Label)
+    .text(y.tickFormat);
+
+vis.render();
+</script>

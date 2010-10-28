@@ -23,9 +23,7 @@ ActiveRecord::Schema.define(:version => 20101027155920) do
   add_index "histograms", ["track_id", "level", "chromosome", "bin"], :name => "index_histograms_on_track_id_and_level_and_chromosome_and_bin"
 
   create_table "tracks", :force => true do |t|
-    t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.string "name"
   end
 
 end
