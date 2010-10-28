@@ -32,7 +32,7 @@ vis.add(pv.Panel)
   .width(4)
   .height(function(d) y(d.y))
   .def("fillStyle", "#999")
-  .event("mouseover", function() this.fillStyle("#f03")) // override
+  .event("mouseover", function() this.fillStyle("#c03")) // override
   .event("mouseout", function() this.fillStyle(undefined)) // restore
   .event("click", function(d) self.location = "/graph/" + chromosome + "/" + zoom_in_level + "/" + d.x.toString())
   .title(function(d) d.x);
