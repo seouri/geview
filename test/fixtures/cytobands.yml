@@ -1,0 +1,15 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  chromosome: MyString
+  start_position: 1
+  end_position: 1
+  name: MyString
+  gie_stain: MyString
+
+two:
+  chromosome: MyString
+  start_position: 1
+  end_position: 1
+  name: MyString
+  gie_stain: MyString

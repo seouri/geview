@@ -90,3 +90,31 @@ a:hover {
   color: #fff;
   background-color: #cca3ad;
 }
+
+/* cytoband gie stains start */
+.gneg {
+  background-color: #fff;
+}
+.gpos25 {
+  background-color: #c0c0c0;
+}
+.gpos50 {
+  background-color: #808080;
+}
+.gpos75 {
+  background-color: #a9a9a9;
+}
+.gpos100 {
+  background-color: #000;
+}
+.acen { /* centromere */
+  background-color: #;
+}
+.gvar { /* a diagonal black-on-white pattern */
+  background-color: #;
+}
+.stalk { /* a narrower gray region, an acrocentric stalk */
+  background-color: #808080;
+}
+
+/* cytoband gie stains end */

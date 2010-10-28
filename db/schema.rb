@@ -10,7 +10,18 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101027155920) do
+ActiveRecord::Schema.define(:version => 20101028181914) do
+
+  create_table "cytobands", :force => true do |t|
+    t.string  "chromosome",     :limit => 5
+    t.integer "start_position"
+    t.integer "end_position"
+    t.string  "name",           :limit => 7
+    t.string  "gie_stain",      :limit => 7
+  end
+
+  add_index "cytobands", ["chromosome", "end_position"], :name => "index_cytobands_on_chromosome_and_end_position"
+  add_index "cytobands", ["chromosome", "start_position"], :name => "index_cytobands_on_chromosome_and_start_position"
 
   create_table "histograms", :force => true do |t|
     t.integer "track_id",   :limit => 2
