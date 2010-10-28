@@ -1,16 +1,17 @@
 <%= chromosome_nav(@chromosome)%>
 <%= zoom_control(@level, @chromosome)%>
 
+<% Track.all.each do |track| %>
+<h2><%= track.name %></h2>
 <script type="text/javascript+protovis">
-var data = <%= Histogram.data(1, @level, @chromosome, @center).html_safe %>;
-var track = "<%= @track %>";
+var data<%= track.id %> = <%= Histogram.data(track.id, @level, @chromosome, @center).html_safe %>;
 var chromosome = "<%= @chromosome.gsub(/^chr/, "") %>";
 var zoom_in_level = "<%= @level.to_i - 1 %>";
 
 /* Sizing and scales. */
 var w = 900, /*data.length * 4,*/
-    h = 80,
-    x = pv.Scale.linear(data, function(d) d.x).range(0, w),
+    h = 50,
+    x = pv.Scale.linear(data<%= track.id %>, function(d) d.x).range(0, w),
     y = pv.Scale.linear(0, 100).range(0, h);
  
 /* The root panel. */
@@ -24,7 +25,7 @@ var vis = new pv.Panel()
 
 /* bar graph */
 vis.add(pv.Panel)
-  .data(data)
+  .data(data<%= track.id %>)
   .left(function(d) x(d.x))
 .add(pv.Bar)
   .bottom(0)
@@ -33,7 +34,7 @@ vis.add(pv.Panel)
   .def("fillStyle", "#999")
   .event("mouseover", function() this.fillStyle("#f03")) // override
   .event("mouseout", function() this.fillStyle(undefined)) // restore
-  .event("click", function(d) self.location = "/graph/" + track + "/" + chromosome + "/" + zoom_in_level + "/" + d.x.toString())
+  .event("click", function(d) self.location = "/graph/" + chromosome + "/" + zoom_in_level + "/" + d.x.toString())
   .title(function(d) d.x);
 
 /* X-axis ticks. */
@@ -51,7 +52,7 @@ vis.add(pv.Rule)
  
 /* Y-axis ticks. */
 vis.add(pv.Rule)
-    .data(y.ticks(5))
+    .data(y.ticks(3))
     .bottom(y)
     .strokeStyle(function(d) d ? "#eee" : "#000")
   .anchor("left").add(pv.Label)
@@ -59,3 +60,4 @@ vis.add(pv.Rule)
 
 vis.render();
 </script>
+<% end %>
