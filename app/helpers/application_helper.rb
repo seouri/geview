@@ -46,7 +46,7 @@ module ApplicationHelper
     bands.each do |b|
       band_width = ((b.end_position - b.start_position).to_f / bands.last.end_position * width).round
       band_width = 1 if band_width == 0
-      td.push(content_tag(:td, b.name, {:class => b.gie_stain, :style => "width: #{band_width}px", :title => b.name}))
+      td.push(content_tag(:td, " ", {:class => b.gie_stain, :style => "width: #{band_width}px", :title => b.name}))
     end
     tr = []
     tr.push(content_tag(:tr, td.join("\n").html_safe))
