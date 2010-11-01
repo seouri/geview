@@ -42,7 +42,7 @@ a:hover {
   text-decoration: none;
   display: block;
   margin: 0;
-  padding: 0.25em 0.95em;
+  padding: 0.25em 0.9em;
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
   border-radius: 4px;
@@ -56,7 +56,7 @@ a:hover {
   color: #fff;
   background-color: #c03;
   margin: 0;
-  padding: 0.25em 0.95em;
+  padding: 0.25em 0.9em;
   display: block;
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
@@ -92,29 +92,81 @@ a:hover {
 }
 
 /* cytoband gie stains start */
+table.cytoband {
+  border: 0;
+  margin: 1em 0 0em 30px;
+  padding: 0;
+}
+.cytoband td {
+  overflow: hidden;
+  margin: 0 -1px 0 0;
+  padding: 0;
+  font-size: 0%;
+  height: 20px;
+}
+table.region {
+  border: 0;
+  margin: 0 0 1em 30px;
+  padding: 0;
+}
+.region td {
+  border: 1px solid #fff;
+  margin: 0 -1px 0 0px;
+  font-size: 0%;
+  height: 10px;
+  color: #fff;
+}
+.region td.current {
+  margin: 0 -1px 0 0;
+  background-color: #c03;
+  color: #c03;
+  font-size: 0%;
+}
 .gneg {
   background-color: #fff;
+  color: #fff;
+  border: 1px solid #000;
 }
 .gpos25 {
   background-color: #c0c0c0;
+  color: #c0c0c0;
+  border: 1px solid #000;
 }
 .gpos50 {
   background-color: #808080;
+  color: #808080;
+  border: 1px solid #000;
 }
 .gpos75 {
   background-color: #a9a9a9;
+  color: #a9a9a9;
+  border: 1px solid #000;
 }
 .gpos100 {
   background-color: #000;
+  color: #000;
+  border: 1px solid #000;
 }
 .acen { /* centromere */
-  background-color: #;
-}
+  background-color: #cca3ad;
+  color: #cca3ad;
+  border: 1px solid #fff;
+  border-top: 1px solid #fff;
+  border-bottom: 1px solid #fff;
+  border-right: 1px solid #000;
+  border-left: 1px solid #000;}
 .gvar { /* a diagonal black-on-white pattern */
-  background-color: #;
+  background-color: #808080;
+  color: #808080;
+  border: 1px solid #000;
 }
 .stalk { /* a narrower gray region, an acrocentric stalk */
   background-color: #808080;
+  color: #808080;
+  border-top: 1px solid #fff;
+  border-bottom: 1px solid #fff;
+  border-right: 1px solid #000;
+  border-left: 1px solid #000;
 }
 
 /* cytoband gie stains end */

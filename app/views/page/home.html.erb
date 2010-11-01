@@ -1,6 +1,7 @@
 <%= chromosome_nav(@chromosome)%>
 <%= zoom_control(@level, @chromosome)%>
 
+<%= cytoband(@level, @chromosome, @center, 900)%>
 <% Track.all.each do |track| %>
 <h2><%= track.name.html_safe %></h2>
 <script type="text/javascript+protovis">

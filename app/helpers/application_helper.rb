@@ -39,4 +39,35 @@ module ApplicationHelper
     end
     content_tag(:div, text.html_safe, :id => "zoom_control").html_safe
   end
+
+  def cytoband(level, chromosome, center = nil, width = 900)
+    td = []
+    bands = Cytoband.where(:chromosome => chromosome)
+    bands.each do |b|
+      band_width = ((b.end_position - b.start_position).to_f / bands.last.end_position * width).round
+      band_width = 1 if band_width == 0
+      td.push(content_tag(:td, b.name, {:class => b.gie_stain, :style => "width: #{band_width}px", :title => b.name}))
+    end
+    tr = []
+    tr.push(content_tag(:tr, td.join("\n").html_safe))
+    table1 = content_tag(:table, tr.join("\n").html_safe, {:class => "cytoband", :style => "width: #{width + 3}px"})
+    bin_size = 10 ** level.to_i
+    bin_start = center.blank? ? 0 : center.to_i - bin_size * 100
+    bin_end = center.blank? ? bands.last.end_position : center.to_i + bin_size * 100
+    if bin_start < 0
+      bin_start = 0
+    end
+    if bin_end > bands.last.end_position
+      bin_end = bands.last.end_position
+    end
+    table2 = ""
+    td2 = []
+    td2.push(content_tag(:td, "0", {:style => "width: #{(bin_start.to_f / bands.last.end_position * width).round}px"}))
+    region_width = ((bin_end - bin_start).to_f / bands.last.end_position * width).round
+    region_width = 1 if region_width == 0
+    td2.push(content_tag(:td, " ", {:class => "current", :style => "width: #{region_width}px"})) if center.present?
+    td2.push(content_tag(:td, "0"))
+    table2 = content_tag(:table, content_tag(:tr, td2.join("\n").html_safe), {:class => "region", :style => "width: #{width + 3}px"})
+    table1 + table2
+  end
 end
