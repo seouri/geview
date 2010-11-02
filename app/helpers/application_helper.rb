@@ -68,7 +68,9 @@ module ApplicationHelper
     td2.push(content_tag(:td, " ", {:class => "current", :style => "width: #{region_width}px", :title => "#{number_with_delimiter(bin_start)}-#{number_with_delimiter(bin_end)}"})) if center.present?
     td2.push(content_tag(:td, "0"))
     table2 = content_tag(:table, content_tag(:tr, td2.join("\n").html_safe), {:class => "region", :style => "width: #{width + 3}px"})
-    cytoband = "<h2>Cytobands</h2>" + table1 + table2
+    mark_info = ""
+    mark_info = " <small>(current region marked with red box)</small>" if center.present?
+    cytoband = "<h2>Cytobands#{mark_info}</h2>" + table1 + table2
     cytoband.html_safe
   end
 
@@ -90,7 +92,7 @@ module ApplicationHelper
         {:x1 => s, :x2 => e, :symbol => g.symbol, :name => g.name}
       end
       track =<<END
-<h2>Genes</h2>
+<h2>Genes <small>(mouseover for gene symbol & name)</small></h2>
 <div id="genes">
 <script type="text/javascript+protovis">
 var genes = #{genes.to_json};

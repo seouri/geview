@@ -4,7 +4,7 @@
 <%= cytoband(@level, @chromosome, @center, 900)%>
 <%= genes(@level, @chromosome, @center, 900)%>
 <% Track.all.each do |track| %>
-<h2><%= track.name.html_safe %></h2>
+<h2><%= track.name.html_safe %> <small>(click on the bar to zoom in)</small></h2>
 <script type="text/javascript+protovis">
 var data<%= track.id %> = <%= Histogram.data(track.id, @level, @chromosome, @center).html_safe %>;
 var chromosome = "<%= @chromosome.gsub(/^chr/, "") %>";
@@ -64,7 +64,7 @@ vis.render();
 </script>
 <% end %>
 
-<h2>Overlap ((P1 or P2 or P3) and (Pinto et al. or Marshall et al.))</h2>
+<h2>Overlap ((P1 or P2 or P3) and (Pinto et al. or Marshall et al.)) <small>(click on the bar to zoom in)</small></h2>
 <script type="text/javascript+protovis">
 var data0 = <%= Histogram.data_overlap(@level, @chromosome, @center).html_safe %>;
 var chromosome = "<%= @chromosome.gsub(/^chr/, "") %>";

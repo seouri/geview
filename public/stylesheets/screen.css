@@ -170,3 +170,7 @@ table.region {
 }
 
 /* cytoband gie stains end */
+
+h2 small {
+  font-weight: normal;
+}
