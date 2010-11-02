@@ -33,9 +33,9 @@ module ApplicationHelper
   end
 
   def zoom_control(level, chromosome)
-    text = "<span>Zoom out (#{number_to_human(10 ** level.to_i)} bases)</span>"
+    text = "<span>Zoom out (#{number_to_human(10 ** level.to_i)} base-bin)</span>"
     if level != 6
-      text = link_to("Zoom out (#{number_to_human(10 ** level.to_i)} bases)", graph_path(:level => level + 1, :chromosome => chromosome.gsub(/^chr/, ""), :center => (level == 5 ? nil : @center)))
+      text = link_to("Zoom out (#{number_to_human(10 ** level.to_i)} base-bin)", graph_path(:level => level + 1, :chromosome => chromosome.gsub(/^chr/, ""), :center => (level == 5 ? nil : @center)))
     end
     content_tag(:div, text.html_safe, :id => "zoom_control").html_safe
   end
@@ -65,9 +65,69 @@ module ApplicationHelper
     td2.push(content_tag(:td, "0", {:style => "width: #{(bin_start.to_f / bands.last.end_position * width).round}px"}))
     region_width = ((bin_end - bin_start).to_f / bands.last.end_position * width).round
     region_width = 1 if region_width == 0
-    td2.push(content_tag(:td, " ", {:class => "current", :style => "width: #{region_width}px"})) if center.present?
+    td2.push(content_tag(:td, " ", {:class => "current", :style => "width: #{region_width}px", :title => "#{number_with_delimiter(bin_start)}-#{number_with_delimiter(bin_end)}"})) if center.present?
     td2.push(content_tag(:td, "0"))
     table2 = content_tag(:table, content_tag(:tr, td2.join("\n").html_safe), {:class => "region", :style => "width: #{width + 3}px"})
-    table1 + table2
+    cytoband = "<h2>Cytobands</h2>" + table1 + table2
+    cytoband.html_safe
+  end
+
+  def genes(level, chromosome, center = nil, width = 900)
+    track = ""
+    if level < 6 and center.present?
+      bin_size = 10 ** level.to_i
+      bin_start = center.to_i - bin_size * 100
+      bin_end = center.to_i + bin_size * 100
+      if bin_start < 0
+        bin_start = 0
+      end
+      if bin_end > Chromosome.where(:name => chromosome).first.size
+        bin_end = Chromosome.where(:name => chromosome).first.size
+      end
+      genes = Gene.region(chromosome, bin_start, bin_end).map do |g|
+        s = g.start_position < bin_start ? bin_start : g.start_position
+        e = g.end_position > bin_end ? bin_end : g.end_position
+        {:x1 => s, :x2 => e, :symbol => g.symbol, :name => g.name}
+      end
+      track =<<END
+<h2>Genes</h2>
+<div id="genes">
+<script type="text/javascript+protovis">
+var genes = #{genes.to_json};
+var w = 900,
+    h = 10,
+    x = pv.Scale.linear(#{bin_start}, #{bin_end}).range(0, w),
+    y = pv.Scale.linear(0, 100).range(0, h);
+ 
+/* The root panel. */
+var vis = new pv.Panel()
+    .width(w)
+    .height(h)
+    .bottom(0)
+    .left(30)
+    .right(30)
+    .top(5);
+
+vis.add(pv.Panel)
+.data(genes)
+.add(pv.Bar)
+  .top(function() 0)
+  .height(10)
+  .left(function(d) x(d.x1))
+  .width(function(d) x(d.x2) - x(d.x1))
+  .def("fillStyle", pv.rgb(128, 128, 128, 0.5))
+  .event("click", function(d) self.location = "/graph/" + chromosome + "/" + zoom_in_level + "/" + d.x.toString())
+  .title(function(d) d.symbol + ": " + d.name);
+
+  vis.add(pv.Rule)
+      .bottom(0)
+      .strokeStyle("#000");
+
+vis.render();
+</script>
+</div>
+END
+    end
+    track.html_safe
   end
 end

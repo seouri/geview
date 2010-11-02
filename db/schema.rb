@@ -10,7 +10,14 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101102084802) do
+ActiveRecord::Schema.define(:version => 20101102140854) do
+
+  create_table "chromosomes", :force => true do |t|
+    t.string  "name"
+    t.integer "size"
+  end
+
+  add_index "chromosomes", ["name"], :name => "index_chromosomes_on_name"
 
   create_table "cytobands", :force => true do |t|
     t.string  "chromosome",     :limit => 5
