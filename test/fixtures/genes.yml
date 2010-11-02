@@ -1,0 +1,27 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  symbol: MyString
+  name: MyString
+  chromosome: MyString
+  strand: MyString
+  start_position: 1
+  end_position: 1
+  coding_start_position: 1
+  coding_end_position: 1
+  exon_count: 1
+  exon_start_positions: MyText
+  exon_end_positions: MyText
+
+two:
+  symbol: MyString
+  name: MyString
+  chromosome: MyString
+  strand: MyString
+  start_position: 1
+  end_position: 1
+  coding_start_position: 1
+  coding_end_position: 1
+  exon_count: 1
+  exon_start_positions: MyText
+  exon_end_positions: MyText
