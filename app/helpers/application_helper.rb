@@ -75,7 +75,7 @@ module ApplicationHelper
   end
 
   def genes(level, chromosome, center = nil, width = 900)
-    track = "<h2>Genes</h2>"
+    track = "<h2>Genes</h2> <p>(Genes will be displayed when zoomed in. Click on the bar to zoom in)</p>"
     if level < 6 and center.present?
       bin_size = 10 ** level.to_i
       bin_start = center.to_i - bin_size * 100
