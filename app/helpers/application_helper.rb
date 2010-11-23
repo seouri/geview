@@ -22,7 +22,7 @@ module ApplicationHelper
     Gchart.line(:title => chromosome, :size => "#{width}x50", :data => data, :format => 'image_tag').html_safe
   end
 
-  def chromosome_nav(chromosome = 1)
+  def chromosome_nav(chromosome = "")
     li = []
     ((1 .. 22).to_a + ["X", "Y"]).each do |c|
       el = c.to_s == chromosome.gsub(/^chr/, "") ? "<span class=\"current\">#{c}</span>" : link_to(c, graph_path(:level => 6, :chromosome => c, :center => nil))
