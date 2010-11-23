@@ -75,7 +75,7 @@ module ApplicationHelper
   end
 
   def genes(level, chromosome, center = nil, width = 900)
-    track = ""
+    track = "<h2>Genes</h2>"
     if level < 6 and center.present?
       bin_size = 10 ** level.to_i
       bin_start = center.to_i - bin_size * 100
@@ -91,7 +91,7 @@ module ApplicationHelper
         e = g.end_position > bin_end ? bin_end : g.end_position
         {:x1 => s, :x2 => e, :symbol => g.symbol, :name => g.name}
       end
-      track =<<END
+      track  = <<END
 <h2>Genes <small>(mouse over for gene symbol & name)</small></h2>
 <div id="genes">
 <script type="text/javascript+protovis">
